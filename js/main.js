@@ -214,31 +214,16 @@ class PerformanceOptimizer {
     }
 
     init() {
-        // Lazy load images if any are added later
-        if ('loading' in HTMLImageElement.prototype) {
-            const images = document.querySelectorAll('img[loading="lazy"]');
-            images.forEach(img => {
-                img.src = img.dataset.src;
-            });
-        } else {
-            // Fallback for browsers that don't support lazy loading
-            this.lazyLoadFallback();
-        }
+        // Future: Add lazy loading for images when/if they are added
+        // Currently using inline SVGs only, so no image optimization needed
+        
+        // Preconnect to external resources for better performance
+        this.optimizeExternalResources();
     }
 
-    lazyLoadFallback() {
-        const images = document.querySelectorAll('img[data-src]');
-        const imageObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const img = entry.target;
-                    img.src = img.dataset.src;
-                    imageObserver.unobserve(img);
-                }
-            });
-        });
-
-        images.forEach(img => imageObserver.observe(img));
+    optimizeExternalResources() {
+        // Google Fonts are already using preconnect in HTML
+        // This method is here for future optimizations
     }
 }
 
